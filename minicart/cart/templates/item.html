@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col col-lg w-75 p-3 border border-2 rounded">
+        <form class="my-4 mx-3">
+            <div class="form-group mb-4 text-center">
+                <h1>Item Info</h1>
+            </div>
+            {% if item %}
+            <div class="form-group w-100 text-center">
+                <input class="form-control my-2 px-3" type="text" placeholder="Name: {{item.name}}" readonly>
+                <textarea class="form-control my-2 px-3" rows="7" placeholder="Description: {{item.description}}" readonly></textarea>
+                <input class="form-control my-2 px-3" type="text" placeholder="Price: {{item.price}}" readonly>
+            </div>
+            <div class="form-group w-100 text-center">
+                <button type="button" class="btn btn-primary w-100 mt-4">Buy</button>
+            </div>
+            {% else %}
+            <p>Item with the specified ID was not found.</p>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
