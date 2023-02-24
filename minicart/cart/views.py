@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.http import JsonResponse
 
 import stripe
 
@@ -19,13 +20,15 @@ def success(request):
 
 def buy_item(request, id):
     item = _find_item_or_default(id)
+    
     session = stripe.checkout.Session.create(
         line_items=[
             {
                 'price_data': { 
                     'currency': 'USD',
                     'product_data': {
-                        'name': item.name
+                        'name': item.name,
+                        'description': item.description
                     },
                     'unit_amount': item.price
                 },
@@ -36,8 +39,10 @@ def buy_item(request, id):
         success_url=f'http://{request.get_host()}/success',
         cancel_url=f'http://{request.get_host()}/item/{item.id}',
     )
-    print(f'http://{request.get_host()}/item/{item.id}')
-    return redirect(session.url, code=303)
+
+    return JsonResponse({
+        'id': session.id
+    })
 
 
 def get_item(request, id):
