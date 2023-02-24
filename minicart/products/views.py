@@ -54,6 +54,9 @@ def get_item(request, id):
 
 
 def _find_item_or_default(id):
-    return Item.objects.get(id=id)
+    try:
+        return Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        return None
     # valid_id = id >= 0 and id < len(items)
     # return items[id] if valid_id else None

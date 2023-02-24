@@ -1,12 +1,12 @@
 from django.db import models
 
 
-class ItemPrev(models.Model):
-    def __init__(self, id, name, description, price):
-        self.id = id
-        self.name = name
-        self.description = description
-        self.price = price
+# class ItemPrev(models.Model):
+#     def __init__(self, id, name, description, price):
+#         self.id = id
+#         self.name = name
+#         self.description = description
+#         self.price = price
 
 
 class Item(models.Model):
