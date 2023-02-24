@@ -46,17 +46,27 @@ def buy_item(request, id):
     })
 
 
-def get_item(request, id):
+def display_item(request, id):
     item = _find_item_or_default(id)
     return render(request, 'item.html', {
         'item': item
     })
 
 
+def display_items(request):
+    return render(request, 'items.html', {
+        'items': _get_item_list()
+    })
+
+
 def _find_item_or_default(id):
     try:
-        return Item.objects.get(pk=id)
+        return _get_item_list().get(pk=id)
     except Item.DoesNotExist:
         return None
     # valid_id = id >= 0 and id < len(items)
     # return items[id] if valid_id else None
+
+
+def _get_item_list():
+    return Item.objects.all()
