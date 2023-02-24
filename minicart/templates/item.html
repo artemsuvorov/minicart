@@ -12,7 +12,7 @@
             <div class="form-group w-100 text-center">
                 <input class="form-control my-2 px-3" type="text" placeholder="Name: {{item.name}}" readonly>
                 <textarea class="form-control my-2 px-3" rows="7" placeholder="Description: {{item.description}}" readonly></textarea>
-                <input class="form-control my-2 px-3" type="text" placeholder="Price: {{item.price}}" readonly>
+                <input class="form-control my-2 px-3" type="text" placeholder="Price: ${{item.get_display_price}}" readonly>
             </div>
             <div class="form-group w-100 text-center">
                 {% csrf_token %}

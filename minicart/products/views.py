@@ -4,7 +4,8 @@ from django.http import JsonResponse
 
 import stripe
 
-from cart.models import items
+# from products.models import items
+from products.models import Item
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -53,5 +54,6 @@ def get_item(request, id):
 
 
 def _find_item_or_default(id):
-    valid_id = id >= 0 and id < len(items)
-    return items[id] if valid_id else None
+    return Item.objects.get(id=id)
+    # valid_id = id >= 0 and id < len(items)
+    # return items[id] if valid_id else None
