@@ -13,10 +13,16 @@ function redirectToCheckout() {
     // Redirect to Stripe Session Checkout
     fetch(href, { method: 'GET' })
         .then(response => response.json())
-        // .then(session => console.log(session.id));
         .then(session => stripe.redirectToCheckout({ 
             sessionId: session.id
-        }));
+        }))
+        .then(result => {
+            if (result.error)
+                alert(result.error.message);
+        })
+        .catch(error => {
+            console.error('Error:', error)
+        });
 }
 
 function getItemIndex() {
