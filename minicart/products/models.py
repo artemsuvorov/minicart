@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # class ItemPrev(models.Model):
@@ -15,8 +16,26 @@ class Item(models.Model):
     # Price in cents
     price = models.IntegerField(default=0)
 
+    @staticmethod
+    def find_or_default(id):
+        try:
+            return Item.get_all_items().get(pk=id)
+        except Item.DoesNotExist:
+            return None
+
+    @staticmethod
+    def get_all_items():
+        return Item.objects.all()
+
+    # TODO: make price a class ?
     def get_display_price(self):
         return '{0:.2f}'.format(self.price / 100)
+
+    def __eq__(self, other):
+        return self.name == other.name
+    
+    def __hash__(self):
+        return hash(self.name)
 
     def __str__(self):
         return self.name
@@ -27,18 +46,29 @@ class Item(models.Model):
     #     self.price = price
 
 
-class Order:
-    items = []
-
-    def add_item(self, item):
-        self.items.append(item)
-
-    def get_display_item_list(self):
-        item_names = map(lambda item: item.name, self.items)
-        return ", ".join(item_names)
+class ItemInOrder(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    @staticmethod
+    def get_order_or_default(user):
+        try:
+            items = list(x.item for x in user.iteminorder_set.all())
+            return Order(items)
+        except ItemInOrder.DoesNotExist:
+            return None
 
     def __str__(self):
-        return str(self.items)
+        return self.item.name
+
+
+class Order:
+    def __init__(self, items):
+        self.items = items
+        self.total_price = sum(item.price for item in self.items)
+
+    def get_display_price(self):
+        return '{0:.2f}'.format(self.total_price / 100)
 
 
 # _items_source_list = [

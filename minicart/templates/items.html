@@ -2,29 +2,27 @@
 
 {% block content %}
 
-<div class="m-0">
-    <h1 class="display-1 user-select-none">Item List</h1>
-    <ol>
+<div class="m-0 h5">
+    <div class="text-center">
+        <h1 class="display-1 user-select-none">Item List</h1>
+    </div>
     {% if items %}
+    <ol>
     {% for item in items %}
-        <li><p class="h5">
-            <a href="/item/{{item.id}}" class="text-muted">
-                {{item.name}}
-            </a>
-        </p></li>
+        <li>
+            <p>
+                <a href="/item/{{item.id}}" class="text-muted">{{item.name}}</a>
+                <span class="text-muted">(${{item.get_display_price}})</span>
+            </p>
+        </li>
     {% endfor %}
+    </ol>
     {% else %}
     <div class="text-center">
         <p>There are no items in the store.</p>
         <p>You can access admin panel to add new items.</p>
     </div>
     {% endif %}
-    </ol>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-{% load static %}
-<script type="module" src="{% static 'redirect.js' %}"></script>
 {% endblock %}

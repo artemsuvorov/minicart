@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse
 
 import stripe
 
-# from products.models import items
 from products.models import Item
 
 
@@ -20,7 +19,7 @@ def success(request):
 
 
 def buy_item(request, id):
-    item = _find_item_or_default(id)
+    item = Item.find_or_default(id)
     
     session = stripe.checkout.Session.create(
         line_items=[
@@ -47,7 +46,7 @@ def buy_item(request, id):
 
 
 def display_item(request, id):
-    item = _find_item_or_default(id)
+    item = Item.find_or_default(id)
     return render(request, 'item.html', {
         'item': item
     })
@@ -55,18 +54,5 @@ def display_item(request, id):
 
 def display_items(request):
     return render(request, 'items.html', {
-        'items': _get_item_list()
+        'items': Item.get_all_items()
     })
-
-
-def _find_item_or_default(id):
-    try:
-        return _get_item_list().get(pk=id)
-    except Item.DoesNotExist:
-        return None
-    # valid_id = id >= 0 and id < len(items)
-    # return items[id] if valid_id else None
-
-
-def _get_item_list():
-    return Item.objects.all()

@@ -17,6 +17,7 @@
             <div class="form-group w-100 text-center">
                 {% csrf_token %}
                 <input type="button" id="buy-button" class="btn btn-primary w-100 mt-4" value="Buy">
+                <input type="button" id="add-to-order-button" class="btn btn-primary w-100 mt-2" value="Add to Order">
             </div>
             {% else %}
             <div class="text-center">
@@ -31,5 +32,5 @@
 
 {% block scripts %}
 {% load static %}
-<script type="module" src="{% static 'redirect.js' %}"></script>
+<script type="module" src="{% static 'checkout.js' %}"></script>
 {% endblock %}

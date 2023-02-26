@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="col-8 col-md-6 col-lg-5 col-xl-4">
+    <div class="m-0 h5 p-5 border border-2 rounded">
+        {% if user.is_authenticated %}
+            {% if items %}
+            <h1 class="display-1 user-select-none text-center">Order</h1>
+            <p>Items in your order:</p>
+            <ul class="list-group my-3">
+            {% for item in items %}
+                <li class="list-group-item">
+                    <p class="h5">
+                        <a href="/item/{{item.id}}" class="text-muted">{{item.name}}</a>
+                        <span class="text-muted">(${{item.get_display_price}})</span>
+                    </p>
+                </li>
+            {% endfor %}
+            </ul>
+            <p>Total: ${{total_price}}</p>
+            <input type="button" id="order-button" class="btn btn-primary w-100 mt-2" value="Buy">
+            {% else %}
+            <div class="text-center">
+                <p>Your order list is empty.</p>
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="text-center">
+                <h1 class="display-1 user-select-none">Order</h1>
+                <p>Please, log in to add items to your order.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% load static %}
+<script type="module" src="{% static 'checkout.js' %}"></script>
+{% endblock %}
