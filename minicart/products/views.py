@@ -3,6 +3,7 @@ from django.conf import settings
 from django.http import JsonResponse
 
 import stripe
+from stripeapi.session import create_stripe_session
 
 from products.models import Item
 
@@ -21,21 +22,8 @@ def success(request):
 def buy_item(request, id):
     item = Item.find_or_default(id)
     
-    session = stripe.checkout.Session.create(
-        line_items=[
-            {
-                'price_data': { 
-                    'currency': 'USD',
-                    'product_data': {
-                        'name': item.name,
-                        'description': item.description
-                    },
-                    'unit_amount': item.price
-                },
-                'quantity': 1,
-            }
-        ],
-        mode='payment',
+    session = create_stripe_session(        
+        items=[item],
         success_url=f'http://{request.get_host()}/success',
         cancel_url=f'http://{request.get_host()}/item/{item.id}',
     )
