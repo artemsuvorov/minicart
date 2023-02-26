@@ -11,11 +11,19 @@
 </head>
 
 <body>
-    
+
     <div id="root" class="vh-100 vw-100">
-        <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-        {% block content %}
-        {% endblock %}
+        <div class="h-100 w-100 d-flex flex-column">
+            <div class="flex-column justify-content-center">
+                {% include 'navbar.html' %}
+            </div>
+
+            <div class="h-100 flex-column justify-content-center flex-grow-1">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                {% block content %}
+                {% endblock %}
+                </div>
+            </div>
         </div>
     </div>
 

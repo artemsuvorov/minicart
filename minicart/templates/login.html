@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="col-8 col-md-6 col-lg-5 col-xl-4">
+    <form method="POST" action="/login" class="p-5 border border-2 rounded">
+        <div class="form-group mb-4 text-center">
+            <h1>Log in Form</h1>
+        </div>
+        
+        {% if form.errors %}
+        <div class="d-flex flex-column alert alert-danger" role="alert">
+            Your username and password didn't match. Please try again.
+        </div>
+        {% endif %}
+
+        {% if next %}
+        <div class="d-flex flex-column alert alert-danger" role="alert">
+            {% if user.is_authenticated %}
+            Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.
+            {% else %}
+            Please login to see this page.
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="form-group d-flex flex-column">
+            <label for="username-field">Username</label>
+            <input name="username" id="username-field" class="form-control my-2 px-3" type="text" placeholder="Username" required>
+            <!-- {{ form.username.label_tag }}
+            {{ form.username }} -->
+        </div>
+        <div class="form-group d-flex flex-column">
+            <label for="password-field">Password</label>
+            <input name="password" id="password-field" class="form-control my-2 px-3" type="password" placeholder="Password" required>
+            <!-- {{ form.password.label_tag }}
+            {{ form.password }} -->
+        </div>
+
+        <div class="mt-4">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary w-100" value="Log in">
+            <input type="hidden" name="next" value="{{ next }}">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

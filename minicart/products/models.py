@@ -27,6 +27,20 @@ class Item(models.Model):
     #     self.price = price
 
 
+class Order:
+    items = []
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def get_display_item_list(self):
+        item_names = map(lambda item: item.name, self.items)
+        return ", ".join(item_names)
+
+    def __str__(self):
+        return str(self.items)
+
+
 # _items_source_list = [
 #     Item(0, 'Grumpy Cat', 'Grumpy Cat\'s unique features are due to an ailment known as feline dwarfism and a skeletal abnormality causing a pronounced underbite.', 100),
 #     Item(1, 'Felicette', 'On October 18th, 1963, Felicette was launched into space by the French aeronautical institution. Felicette is the first and only cat to have returned to earth after travelling to outer space!', 120),
