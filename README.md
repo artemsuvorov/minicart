@@ -77,9 +77,9 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
 
-## Администрирование
+## Использование
 
-В приложении был создан супер-пользователь со следующими данными:
+Данное веб-приложение было развернуто и опубликовано на [railway.app](https://railway.app) и доступно по ссылке: [minicart-app](https://minicart-deploy-production.up.railway.app/), а также в разделе Releases. В развернутой на серевере PostgreSQL базе данных был создан супер-пользователь со следующими данными:
 
 ```
 Username: admin
