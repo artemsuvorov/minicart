@@ -83,7 +83,7 @@ Quit the server with CTRL-BREAK.
 
 ```
 Username: admin
-Email address: example@test.org
+Email address: admin@email.com
 Password: 123123
 ```
 
